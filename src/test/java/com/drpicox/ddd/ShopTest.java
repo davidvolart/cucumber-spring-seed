@@ -16,34 +16,30 @@ import static com.google.common.truth.Truth.assertThat;
 @AutoConfigureMockMvc
 public class ShopTest {
 
-    private Shop shop = new Shop();
+    @Autowired Shop shop;
 
     @Test
     public void buyProductFailsWhenTheProductDoesNotExist() {
-        this.shop.buyProduct("2");
-        assertThat(false).isFalse();
+        assertThat(this.shop.buyProduct("2")).isFalse();
     }
 
     @Test
     public void buyProductWorksWhenThereisEnoughtStock() {
         var product = new Tshirt("1","T-shirt",32,2);
         this.shop.addProduct(product);
-        this.shop.buyProduct(product.getId());
-        assertThat(true).isTrue();
+        assertThat(this.shop.buyProduct(product.getId())).isTrue();
     }
 
     @Test
     public void RequestStockFailsWhenTheProductDoesNotExist() {
-        this.shop.requestStock("4");
-        assertThat(false).isFalse();
+        assertThat(this.shop.requestStock("4")).isFalse();
     }
 
     @Test
     public void RequestStockWorksWhenTheProductExist() {
         var product = new Tshirt("2","T-shirt",32,2);
         this.shop.addProduct(product);
-        this.shop.requestStock("2");
-        assertThat(true).isTrue();
+        assertThat(this.shop.requestStock("2")).isTrue();
     }
 
 }
